@@ -1,5 +1,3 @@
-# kingcwt_radiant_rotation
-astro blog
 # Mia - Astro & Tailwindcss & MDX Theme
 
 [English](README.md) | [中文](README_zh.md) | [Demo](https://astro-theme-mia.pages.dev/)
