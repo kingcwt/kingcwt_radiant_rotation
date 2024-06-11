@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../components/layout.astro";
 import Tag from "../../components/tag.astro";
+import { fade } from 'astro:transitions';
 
 // MDX Components
 import DateTag from "../../components/date-tag.astro";
@@ -26,8 +27,8 @@ const { Content, remarkPluginFrontmatter } = await post.render();
 <Layout title={post.data.title} description={post.data.description}>
   <div class="flex flex-col gap-8 md:w-5/6 px-4 py-12 sm:px-8 mx-auto">
     <div class="flex flex-col gap-6 items-center justify-center max-w-screen-sm mx-auto">
-      <h1 id="header" class="text-5xl text-center font-title font-black">{post.data.title}</h1>
-      <span>阅读时长：<span>{remarkPluginFrontmatter.minutesRead}</span></span>
+      <h1 transition:animate={fade({ duration: '2s' })} id="header" class="text-5xl text-center font-title font-black">{post.data.title}</h1>
+      <span >阅读时长：<span>{remarkPluginFrontmatter.minutesRead} 分钟</span></span>
       <div class="flex items-center justify-center gap-2">
         <DateTag date={post.data.date} />
         {post.data.tags?.map((tag) => <Tag tag={tag} />)}
