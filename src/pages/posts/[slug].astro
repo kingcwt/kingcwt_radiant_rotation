@@ -2,11 +2,12 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../components/layout.astro";
 import Tag from "../../components/tag.astro";
-import { fade } from 'astro:transitions';
+import { fade } from "astro:transitions";
 
 // MDX Components
 import DateTag from "../../components/date-tag.astro";
 import PostContent from "../../components/post/post-content.astro";
+import PostComments from "../../components/PostComments.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -27,8 +28,8 @@ const { Content, remarkPluginFrontmatter } = await post.render();
 <Layout title={post.data.title} description={post.data.description}>
   <div class="flex flex-col gap-8 md:w-5/6 px-4 py-12 sm:px-8 mx-auto">
     <div class="flex flex-col gap-6 items-center justify-center max-w-screen-sm mx-auto">
-      <h1 transition:animate={fade({ duration: '2s' })} id="header" class="text-5xl text-center font-title font-black">{post.data.title}</h1>
-      <span >阅读时长：<span>{remarkPluginFrontmatter.minutesRead} 分钟</span></span>
+      <h1 id="header" class="text-5xl text-center font-title font-black">{post.data.title}</h1>
+      <span>阅读时长：<span>{remarkPluginFrontmatter.minutesRead} 分钟</span></span>
       <div class="flex items-center justify-center gap-2">
         <DateTag date={post.data.date} />
         {post.data.tags?.map((tag) => <Tag tag={tag} />)}
@@ -43,6 +44,11 @@ const { Content, remarkPluginFrontmatter } = await post.render();
   </div>
   <div class="relative flex flex-col gap-2 max-w-screen-md mx-auto px-4 sm:px-6 text-base text-zinc-700">
     <PostContent post={post} />
+    <div
+      class="w-full relative flex flex-row justify-between gap-2 max-w-screen-md mx-auto px-4 sm:px-6 text-base text-zinc-700 pb-6"
+    >
+      <PostComments />
+    </div>
   </div>
 
   <script>

@@ -2,6 +2,11 @@
 import Layout from "../components/layout.astro";
 import PostListing from "../components/post/post-list.astro";
 import { posts } from "../helpers";
+import { ViewTransitions } from 'astro:transitions';
+
 ---
 
-<Layout><PostListing posts={posts} /></Layout>
+<Layout>
+  <ViewTransitions />
+  <PostListing posts={posts} />
+</Layout>

@@ -1,5 +1,6 @@
 ---
-import { FOOTER_CONTENT } from "../config";
+import { FOOTER_CONTENT, SITE_TITLE } from "../config";
+import Container from "./Container.astro";
 ---
 
 <footer class="bg-gradient-to-t from-orange-50">
@@ -10,4 +11,13 @@ import { FOOTER_CONTENT } from "../config";
       {FOOTER_CONTENT}
     </p>
   </div>
+  <div class="relative flex flex-row justify-between gap-2 max-w-screen-md mx-auto px-4 sm:px-6 text-base text-zinc-700 pb-6">
+   <span class="text-xs"> &copy; {new Date().getFullYear()} • {SITE_TITLE} 🔬</span>
+   <span class="text-xs">永远热血,永远热爱,永远热泪盈眶 🚀 🚀 🚀</span>
+  </div>
+
 </footer>
+
+
+
+
