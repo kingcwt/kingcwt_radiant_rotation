@@ -5,6 +5,7 @@ import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,7 +21,7 @@ export default defineConfig({
       shikiConfig: {
         theme: "github-light",
       },
-      remarkPlugins: [remarkMath],
+      remarkPlugins: [remarkMath, remarkReadingTime],
       rehypePlugins: [rehypeKatex],
     }),
     sitemap(),

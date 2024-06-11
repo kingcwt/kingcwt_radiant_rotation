@@ -1,0 +1,75 @@
+---
+title: "Install reading-time mdast-util-to-string packages"
+description: "增加文章阅读时间 插件配置"
+date: "2024-06-07"
+tags: ["package", "plugin"]
+cover: "https://images.unsplash.com/photo-1579762593175-20226054cad0"
+---
+
+
+
+
+### 安装插件
+
+```shell
+pnpm add reading-time mdast-util-to-string
+```
+
+### 创建remark-reding-time.mjs 插件
+```js
+import getReadingTime from 'reading-time';
+import { toString } from 'mdast-util-to-string';
+
+export function remarkReadingTime() {
+  return function (tree, { data }) {
+    const textOnPage = toString(tree);
+    const readingTime = getReadingTime(textOnPage);
+    // readingTime.text 会以友好的字符串形式给出阅读时间，例如 "3 min read"。
+    data.astro.frontmatter.minutesRead = readingTime.text;
+  };
+}
+```
+
+### 将插件添加到您的配置中：
+
+```js
+import { defineConfig } from 'astro/config';
+import { remarkReadingTime } from './remark-reading-time.mjs';
+
+export default defineConfig({
+  markdown: {
+    remarkPlugins: [remarkReadingTime],
+  },
+});
+```
+现在所有 Markdown 文档minutesRead在其前言中都会有一个计算属性。
+
+
+### 显示阅读时间
+
+```js
+// src/pages/posts/[slug].astro
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const blog = await getCollection('blog');
+  return blog.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await entry.render();
+---
+
+<html>
+  <head>...</head>
+  <body>
+    ...
+    <p>{remarkPluginFrontmatter.minutesRead}</p>
+    ...
+  </body>
+</html>
+```
