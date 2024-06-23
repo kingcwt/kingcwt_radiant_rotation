@@ -4,6 +4,7 @@ body {
   height: 100vh;
   content-visibility: auto;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.6px;
 }
 
 *:focus-visible {
@@ -16,14 +17,14 @@ code {
 
 pre.astro-code {
   @apply px-4 py-3 rounded-lg text-xl !bg-zinc-50/60 leading-6 overflow-x-scroll;
-  background-color: rgb(249 249 249 / 60%) !important;
+  /* background-color: rgb(249 249 249 / 60%) !important; */
+  background-color: rgb(236 236 236 / 60%) !important;
 }
 
 svg.rough-annotation {
   opacity: 70%;
 }
 
-
-.avator_style{
+.avator_style {
   border: 1px solid #13151a;
 }

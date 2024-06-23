@@ -9,7 +9,7 @@ import { remarkReadingTime } from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astro-theme-mia.pages.dev",
+  site: "https://china.kingcwt.top/",
   trailingSlash: "never",
   prefetch: {
     prefetchAll: true,

@@ -1,0 +1,202 @@
+---
+title: "Go语言的map数据结构"
+description: "Map data structure in Go"
+date: "2024-06-23"
+tags: ["go"]
+cover: "/cover/cover_two.jpg"
+---
+
+> 在Go语言中，map类型是一种内置的数据结构，用于存储键值对（key-value pairs）。map是一种哈希表，通过键来快速查找值。以下是关于map类型的详细介绍，包括如何定义、使用以及使用make和不用make创建的区别。
+
+#### 1.定义map
+
+map的基本定义格式如下：
+
+```go
+var mapName map[keyType]valueType
+```
+
+- mapName：map的名字
+- keyType：键的类型
+- valueType：值的类型
+
+#### 2.使用map
+
+##### 定义和初始化
+
+要使用map，可以通过两种方式：使用make函数和字面量方式。
+
+##### 使用make函数创建map：
+
+```go
+mapName := make(map[keyType]valueType)
+```
+
+例如:
+
+```go
+m := make(map[string]int)
+```
+
+##### 不用make创建(字面量方式):
+
+```go
+m := map[string]int{
+    "one": 1,
+    "two": 2,
+}
+```
+
+##### 访问和修改map中的元素
+
+- ##### 添加或更新元素
+
+```go
+m["key"] = value
+```
+
+例如：
+
+```go
+m["three"] = 3
+```
+
+- ##### 访问元素：
+
+```go
+value := m["key"]
+```
+
+例如：
+
+```go
+value := m["one"]
+fmt.Println(value)  // 输出 1
+```
+
+- ##### 删除元素：
+
+```go
+delete(m, "key")
+```
+
+例如：
+
+```go
+delete(m, "two")
+```
+
+- ##### 检查键是否存在：
+
+```go
+value, ok := m["key"]
+```
+
+例如：
+
+```go
+if value, ok := m["three"]; ok {
+    fmt.Println("Key exists with value:", value)
+} else {
+    fmt.Println("Key does not exist")
+}
+```
+
+#### 3.使用make创建和不用make创建的区别
+
+- ##### 使用make创建map：
+  使用make创建的map会分配内存并初始化该map。这样创建的map在使用之前不需要额外的初始化步骤，直接可以使用。
+
+```go
+m := make(map[string]int)
+m["key"] = 1
+```
+
+- ##### 不用make创建(直接声明map变量):
+  如果只是声明map变量而不初始化，则此map为nil，在使用之前必须进行初始化，否则会导致运行时错误。
+
+```go
+var m map[string]int
+// m["key"] = 1 // 运行时错误：panic: assignment to entry in nil map
+
+m = make(map[string]int)
+m["key"] = 1 // 正常工作
+```
+
+总结：直接声明map变量（例如：var m map[string]int）时，必须在使用前通过make或字面量方式初始化，否则会引发运行时错误。而使用make函数创建map则会自动初始化，因此可以直接使用。
+
+#### 4.示例代码
+
+以下是一个完整的示例代码，展示了map的定义、初始化、访问、修改、删除和检查键是否存在：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // 使用make函数创建map
+    m1 := make(map[string]int)
+    m1["one"] = 1
+    m1["two"] = 2
+    fmt.Println("m1:", m1)
+
+    // 不用make创建map（字面量方式）
+    m2 := map[string]int{
+        "apple":  5,
+        "banana": 10,
+    }
+    fmt.Println("m2:", m2)
+
+    // 访问元素
+    value := m2["apple"]
+    fmt.Println("Value for 'apple':", value)
+
+    // 修改元素
+    m2["banana"] = 20
+    fmt.Println("Updated m2:", m2)
+
+    // 删除元素
+    delete(m2, "apple")
+    fmt.Println("After deletion m2:", m2)
+
+    // 检查键是否存在
+    if value, ok := m2["banana"]; ok {
+        fmt.Println("Key 'banana' exists with value:", value)
+    } else {
+        fmt.Println("Key 'banana' does not exist")
+    }
+
+    // 声明但未初始化的map
+    var m3 map[string]int
+    // m3["key"] = 1 // 这行代码会导致运行时错误
+
+    // 使用make初始化
+    m3 = make(map[string]int)
+    m3["key"] = 1
+    fmt.Println("m3:", m3)
+}
+```
+以上代码展示了如何定义、初始化、访问和修改map，并介绍了使用make和不用make创建的区别。
+注意点：就是字面量创建的map一定要创建的时候就默认赋值`(也就是上面说的初始化)` 否则，就会报错，但是make创建的不需要你再初始化
+
+
+
+#### <Notation type='highlight'  color='rgb(255, 241, 118)'>特别说明一下字面量创建的map</Notation>
+```go
+// ✅ `正确的`方式
+
+var m = map[string]int{
+    "one":1,
+    "two":2
+}
+
+m["three"] = 3
+
+// ❌ `错误的`方式
+
+var m = map[string]int
+
+m["three"] = 3 // 报错
+
+```

@@ -1,0 +1,94 @@
+---
+title: "算法-两数之和"
+description: "Algorithm - sum of two numbers"
+date: "2024-06-23"
+tags: ["go",'python','javascript','typescript']
+cover: "/cover/cover_three.jpg"
+---
+
+
+
+### 1.两数之和
+
+#### 题目描述 [<a href='https://leetcode.cn/problems/two-sum/description/'>`leetcode原题链接`</a>]
+给你一个整数数组`nums`和一个整数目标值`target`,在该数组中找出和为目标值`target`的那两个整数，并返回它们的数组下标。<Notation type='underline' color='blue'>可以按任意顺序返回答案。数组中同一个元素在答案中不能重复出现。只会存在一个有效答案</Notation>
+
+##### 示例1
+```md
+输入：nums = [2,7,11,15], target = 9
+输出：[0,1]
+解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+```
+
+##### 示例2
+```md
+输入：nums = [3,2,4], target = 6
+输出：[1,2]
+```
+
+##### 示例3
+```md
+输入：nums = [3,3], target = 6
+输出：[0,1]
+```
+
+#### 思路
+
+
+>这道题是简单等级的题，我自己的思考，首先对于这道题，首先想到的就是 a+b=c c-b=a，也就是target减去数组中的某个值 等于数组中的另一个值。所以这个时候需要一个地方去存数组中的一个值，并且题要求返回索引下标。那就需要找到这个值并且有这个值对应的下标。哪这个时候想到的就是对象形式。key,value的方式。js中我采用Map。key作为这个值，value作为这个下标。然后通过target - 当前值  = 你存的这个值。对吧。如果能找到到这个值 说明当前遍历的这个值和存在Map里面的值相加等于目标值，我们就返回这个值对应的下标和当前遍历的这个值的下标。如果刚开始的时候Map对象是空的，找不到的时候，我们就把当前这个值存在Map里。然后去遍历下一个值再去Map里面找看有没有相符的。直到找到为止，找不到返回空数组。大概思路就这样。那接下来。分别用,ts,go,python来实现一下具体的代码。
+
+##### typescript版本解题代码
+```typescript
+function twoSum(nums: number[], target: number): number[] {
+    const m = new Map()
+    
+    for(let i = 0; i < nums.length; i++){
+       const val = nums[i];
+       if(m.has(target - val)){
+         return [m.get(target - val),i]
+       }
+       m.set(val,i)
+        
+    }
+};
+```
+
+##### go版本解题代码
+```go
+func twoSum(nums []int, target int) []int {
+     m := make(map[int]int)
+
+     for i:=0; i<len(nums); i++ {
+        value := nums[i]
+        if _,ok := m[target - value]; ok {
+            arr :=[]int{0,0}
+            arr[0] = m[target - value]
+            arr[1] = i
+            return arr
+        }
+        m[value] = i
+     }
+
+     return []int{0,0}
+}
+```
+
+##### python版本解题代码
+```python
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        m = {}
+        for index,value in enumerate(nums):
+            if (target - value) in m:
+                return [m[target - value],index]
+            m[value] = index
+        return []
+```
+
+
+以上就是全部的代码实现。不喜勿喷。主要是系统的去领会真正理解并且掌握这道题。其他题会在后续文章更新。我也是边学边记录。如果有任何问题可以在下方评论留言，如果对你有一点点的作用。欢迎下方评论区给个小红心。😅
